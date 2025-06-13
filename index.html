@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인사관리 업무 지시사항 대책안</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #dc2626;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #dc2626;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header p {
+            color: #666;
+            margin: 10px 0 0 0;
+            font-size: 14px;
+        }
+        .urgent-notice {
+            background-color: #fef2f2;
+            border: 2px solid #dc2626;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .urgent-notice h2 {
+            color: #dc2626;
+            margin-top: 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .urgent-notice .urgent-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .tracking-guide {
+            background-color: #f0f9ff;
+            border: 2px solid #0284c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .tracking-guide h2 {
+            color: #0284c7;
+            margin-top: 0;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .tracking-guide .icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .google-sheet-link {
+            background-color: #dcfce7;
+            border: 2px solid #16a34a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .google-sheet-link a {
+            color: #16a34a;
+            font-weight: bold;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        .google-sheet-link a:hover {
+            text-decoration: underline;
+        }
+        .simple-instructions {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .simple-instructions h4 {
+            color: #f59e0b;
+            margin: 0 0 10px 0;
+        }
+        .simple-instructions ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .simple-instructions li {
+            margin-bottom: 5px;
+        }
+        .download-btn {
+            background-color: #dc2626;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            margin: 10px 5px;
+        }
+        .download-btn:hover {
+            background-color: #b91c1c;
+        }
+        .deadline-warning {
+            background-color: #fffbeb;
+            border: 1px solid #f59e0b;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            color: #92400e;
+            font-weight: bold;
+            text-align: center;
+        }
+        .item {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .item-header {
+            background-color: #dc2626;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .item-content {
+            padding: 20px;
+        }
+        .directive {
+            background-color: #fef2f2;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #dc2626;
+        }
+        .directive h4 {
+            margin: 0 0 10px 0;
+            color: #dc2626;
+            font-size: 14px;
+        }
+        .action {
+            background-color: #f0fdf4;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #16a34a;
+        }
+        .action h4 {
+            margin: 0 0 10px 0;
+            color: #16a34a;
+            font-size: 14px;
+        }
+        .action-steps {
+            margin-top: 15px;
+        }
+        .action-steps h5 {
+            color: #16a34a;
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        .action-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .action-steps li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .details {
+            margin-top: 15px;
+        }
+        .details table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .details th {
+            background-color: #edf2f7;
+            color: #4a5568;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .details td {
+            color: #2d3748;
+            font-size: 14px;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .priority {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .priority.urgent {
+            background-color: #fef2f2;
+            color: #dc2626;
+        }
+        .priority.high {
+            background-color: #fff7ed;
+            color: #ea580c;
+        }
+        .kakao-example {
+            background-color: #fee500;
+            color: #000;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .kakao-example h4 {
+            margin: 0 0 10px 0;
+            color: #3a3a3a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚨 인사관리 업무 지시사항 대책안</h1>
+            <p>긴급 대응 체계 - 전원 책임 대응</p>
+        </div>
+
+        <div class="urgent-notice">
+            <h2>
+                <span class="urgent-icon">⚠️</span>
+                긴급 지시사항
+            </h2>
+            <p><strong>최근 반복적인 실무 누락 및 업무 미이행이 확인되고 있습니다.</strong></p>
+            <p>해당 건은 <span style="color: #dc2626; font-weight: bold;">전원 책임 대응 체계</span>로 간주하니, 착오 없도록 하십시오.</p>
+        </div>
+
+        <div class="deadline-warning">
+            ⏰ 1차 결과 보고 마감: 2025년 6월 19일 (목) 오전
+        </div>
+
+        <div class="tracking-guide">
+            <h2>
+                <span class="icon">📊</span>
+                진행률 관리 방법 (초간단!)
+            </h2>
+            
+            <div class="google-sheet-link">
+                <p style="margin: 0 0 10px 0; font-weight: bold; color: #dc2626;">
+                    ⚠️ 아래는 관리자가 직접 만들어서 공유해야 하는 링크입니다
+                </p>
+                <a href="#" onclick="showGoogleSheetGuide()" style="color: #16a34a; font-weight: bold; font-size: 18px;">
+                    📋 구글시트 만드는 방법 보기
+                </a>
+            </div>
+
+            <div id="googleSheetGuide" style="display: none; background-color: #f0fdf4; border: 2px solid #16a34a; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                <h4 style="color: #16a34a; margin: 0 0 15px 0;">📝 구글시트 만드는 방법 (관리자용)</h4>
+                <ol style="margin: 0; padding-left: 20px;">
+                    <li><strong>구글 드라이브 접속</strong>: <a href="https://drive.google.com" target="_blank">drive.google.com</a></li>
+                    <li><strong>새로 만들기 → 구글 스프레드시트</strong> 클릭</li>
+                    <li><strong>아래 "구글시트 템플릿 복사" 버튼</strong>을 눌러서 표 복사</li>
+                    <li><strong>구글시트에 붙여넣기</strong> (Ctrl+V)</li>
+                    <li><strong>우측 상단 "공유" 버튼</strong> → "링크가 있는 모든 사용자" → "편집자"로 설정</li>
+                    <li><strong>생성된 링크를 팀원들에게 공유</strong></li>
+                </ol>
+                <p style="margin: 15px 0 0 0; color: #059669; font-weight: bold;">
+                    ✅ 완성! 이제 모든 팀원이 같은 시트에서 작업 가능
+                </p>
+            </div>
+
+            <div class="simple-instructions">
+                <h4>🎯 전체 프로세스</h4>
+                <ol>
+                    <li><strong>관리자:</strong> 위 방법으로 구글시트 생성 및 링크 공유</li>
+                    <li><strong>팀원들:</strong> 공유받은 링크로 접속하여 본인 담당 업무 진행률 입력</li>
+                    <li><strong>카톡 알림:</strong> 업데이트 후 "업데이트 완료" 간단 알림</li>
+                    <li><strong>관리자:</strong> 구글시트에서 실시간 전체 현황 확인</li>
+                </ol>
+            </div>
+
+            <div class="kakao-example">
+                <h4>💬 카톡 단체방 알림 예시</h4>
+                <p><strong>김철수:</strong> 1번 30% 업데이트 완료 (노무사 자문 일정 잡음)</p>
+                <p><strong>이영희:</strong> 3번 60% 업데이트 완료 (절차서 초안 작성 중)</p>
+                <p><strong>박민수:</strong> 4번 85% 업데이트 완료 (분석 완료, 보고서 정리 중)</p>
+                <br>
+                <p style="color: #666; font-size: 12px;">👆 이렇게 간단하게만! 구글시트에서 실시간으로 모든 현황 확인 가능</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="download-btn" onclick="downloadAsWord()">📥 대책안 Word 다운로드</button>
+            <button class="download-btn" onclick="copyGoogleSheetTemplate()">📋 구글시트 템플릿 복사</button>
+        </div>
+
+        <div class="item">
+            <div class="item-header">1. 인사관리 규정 재정비</div>
+            <div class="item-content">
+                <div class="directive">
+                    <h4>📋 지시사항</h4>
+                    <p>현행 규정 전반 검토 및 정비안 초안 제출 (적용 가능한 부분부터 실시)</p>
+                    <p><strong>포함사항:</strong> 타사 사례 및 관련 법령 기준과의 비교 분석</p>
+                </div>
+                <div class="action">
+                    <h4>📝 실행 계획</h4>
+                    <p><strong>인사관리 규정 전면 재정비 및 법적 타당성 확보</strong></p>
+                    <div class="action-steps">
+                        <h5>실행 단계:</h5>
+                        <ol>
+                            <li>현행 인사관리 규정 전체 조항 검토 및 문제점 도출</li>
+                            <li>노동관계법령(근로기준법, 노동조합법 등) 기준 대조 분석</li>
+                            <li>동종업계 3개 이상 기업 인사규정 벤치마킹</li>
+                            <li>변경 필요 조항별 우선순위 설정 및 단계별 개정안 작성</li>
+                            <li>노무사 자문을 통한 법적 리스크 검토</li>
+                            <li>적용 가능한 조항부터 우선 시행 방안 마련</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="details">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>담당부서</th>
+                                <th>주담당자</th>
+                                <th>우선순위</th>
+                                <th>보고 기한</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인사팀</td>
+                                <td>인사팀장</td>
+                                <td><span class="priority urgent">긴급</span></td>
+                                <td>2025-06-19</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="item-header">2. 근로계약서 조항 신설 (항목 10번)</div>
+            <div class="item-content">
+                <div class="directive">
+                    <h4>📋 지시사항</h4>
+                    <p>아래 문구를 포함한 항목 신설을 검토하고, 관련 법적 타당성 확보:</p>
+                    <div style="background-color: #f9fafb; padding: 15px; border-radius: 5px; margin: 10px 0; border-left: 3px solid #6b7280;">
+                        <p>• 본 계약은 기간의 정함이 없는 계약이지만, 근로자의 직무 수행 능력 및 조직 적합성 등을 종합적으로 고려하여, 매 1년마다 업무 평가를 실시한다.</p>
+                        <p>• 평가 결과에 따라 직무 재배치, 보상 조건의 조정, 인사 조치 등에 대해 상호 협의할 수 있다.</p>
+                        <p>• 단, 해고 또는 불이익 처분 시에는 근로기준법에 따른 정당한 사유 및 절차를 따른다.</p>
+                    </div>
+                </div>
+                <div class="action">
+                    <h4>📝 실행 계획</h4>
+                    <p><strong>근로계약서 항목 10번 신설 및 법적 타당성 검토</strong></p>
+                    <div class="action-steps">
+                        <h5>실행 단계:</h5>
+                        <ol>
+                            <li>제시된 조항의 근로기준법 적합성 검토</li>
+                            <li>연간 평가제 도입에 따른 법적 리스크 분석</li>
+                            <li>노무법인 또는 노무사를 통한 전문적 법률 검토</li>
+                            <li>기존 근로계약서 양식 개정안 작성</li>
+                            <li>신규 입사자 및 기존 직원 적용 방안 수립</li>
+                            <li>노동부 신고 등 법적 절차 이행 방안 마련</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="details">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>담당부서</th>
+                                <th>주담당자</th>
+                                <th>우선순위</th>
+                                <th>보고 기한</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인사팀</td>
+                                <td>인사팀장</td>
+                                <td><span class="priority urgent">긴급</span></td>
+                                <td>2025-06-19</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="item-header">3. 평가 및 재협의 절차 문서화</div>
+            <div class="item-content">
+                <div class="directive">
+                    <h4>📋 지시사항</h4>
+                    <p>항목 10번과 연계된 평가 시기, 방식, 협의 절차 등을 포함한 실행 절차서 마련</p>
+                </div>
+                <div class="action">
+                    <h4>📝 실행 계획</h4>
+                    <p><strong>연간 평가 및 재협의 절차 표준화 문서 작성</strong></p>
+                    <div class="action-steps">
+                        <h5>실행 단계:</h5>
+                        <ol>
+                            <li>연간 평가 시기 및 주기 설정 (예: 입사 주년일 기준)</li>
+                            <li>평가 항목 및 기준 수립 (직무능력, 조직적합성, 성과 등)</li>
+                            <li>평가 실시 절차 및 방법 매뉴얼 작성</li>
+                            <li>평가 결과에 따른 협의 절차 및 가능한 조치사항 명시</li>
+                            <li>재배치, 보상조정 등의 구체적 실행 절차 수립</li>
+                            <li>평가 및 협의 과정의 기록 관리 방안 마련</li>
+                            <li>이의신청 및 구제 절차 포함</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="details">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>담당부서</th>
+                                <th>주담당자</th>
+                                <th>우선순위</th>
+                                <th>보고 기한</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인사팀</td>
+                                <td>인사팀장</td>
+                                <td><span class="priority urgent">긴급</span></td>
+                                <td>2025-06-19</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="item-header">4. 부서별 임률 및 근무시간 산출</div>
+            <div class="item-content">
+                <div class="directive">
+                    <h4>📋 지시사항</h4>
+                    <p>• 각 부서별 평균 임금률 산정</p>
+                    <p>• 각 부서별 <strong>작년 실제 근무시간</strong> 집계 포함</p>
+                    <p>• 보상 체계 개편 및 인력 운영 기준 수립에 활용 가능하도록 정량 자료 기반 제시</p>
+                </div>
+                <div class="action">
+                    <h4>📝 실행 계획</h4>
+                    <p><strong>부서별 임률 분석 및 근무시간 실태 조사</strong></p>
+                    <div class="action-steps">
+                        <h5>실행 단계:</h5>
+                        <ol>
+                            <li>전 부서 대상 2024년 실제 근무시간 데이터 수집</li>
+                            <li>부서별 기본급, 수당, 상여금 등 총 급여 현황 분석</li>
+                            <li>시간당 평균 임금률 산정 (총 급여 ÷ 총 근무시간)</li>
+                            <li>부서별 초과근무, 특근 등 근무패턴 분석</li>
+                            <li>동종업계 임금 수준과의 비교 분석</li>
+                            <li>보상 체계 개편을 위한 개선 방안 제시</li>
+                            <li>인력 운영 효율화 방안 도출</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="details">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>담당부서</th>
+                                <th>주담당자</th>
+                                <th>우선순위</th>
+                                <th>보고 기한</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>인사팀</td>
+                                <td>인사팀장</td>
+                                <td><span class="priority high">높음</span></td>
+                                <td>2025-06-19</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; padding: 20px; background-color: #fef2f2; border-radius: 8px; border: 1px solid #dc2626;">
+            <h2 style="color: #dc2626; margin-top: 0;">⚠️ 중요 안내사항</h2>
+            
+            <h3 style="color: #dc2626; margin: 20px 0 15px 0;">🎯 핵심 요구사항</h3>
+            <ul style="margin: 0; padding-left: 20px; color: #374151;">
+                <li><strong>전원 책임 대응:</strong> 모든 담당자는 지시사항 완수에 책임을 진다</li>
+                <li><strong>법적 타당성:</strong> 모든 조치는 관련 법령에 근거하여 시행</li>
+                <li><strong>정량적 근거:</strong> 분석 자료는 객관적 데이터에 기반</li>
+                <li><strong>단계적 시행:</strong> 적용 가능한 부분부터 우선 실행</li>
+                <li><strong>실무 연계:</strong> 현장 적용 가능성을 최우선 고려</li>
+            </ul>
+
+            <div style="background-color: #fffbeb; padding: 15px; border-radius: 5px; margin-top: 20px; border: 1px solid #f59e0b;">
+                <h4 style="color: #92400e; margin: 0 0 10px 0;">📅 보고 일정</h4>
+                <p style="margin: 0; color: #92400e;"><strong>1차 보고:</strong> 2025년 6월 19일 (목) 오전</p>
+                <p style="margin: 5px 0 0 0; color: #92400e;"><strong>최종 완료:</strong> 추후 지시 예정</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showGoogleSheetGuide() {
+            const guide = document.getElementById('googleSheetGuide');
+            guide.style.display = guide.style.display === 'none' ? 'block' : 'none';
+            
+            if (guide.style.display === 'block') {
+                guide.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function copyGoogleSheetTemplate() {
+            const template = `📋 인사관리 업무 지시사항 진행률 관리표
+
+업무번호	업무명	담당자	진행률(%)	상황설명	최종업데이트일
+1	인사관리 규정 재정비	인사팀장	0	미착수	2025-06-13
+2	근로계약서 조항 신설	인사팀장	0	미착수	2025-06-13
+3	평가 및 재협의 절차 문서화	인사팀장	0	미착수	2025-06-13
+4	부서별 임률 및 근무시간 산출	인사팀장	0	미착수	2025-06-13
+
+📝 사용법:
+1. 담당자명을 실제 이름으로 변경
+2. 진행률(%) 칸에 0~100 숫자만 입력
+3. 상황설명에 간단히 현재 상태 기록 (예: "노무사 자문 진행 중", "초안 작성 완료")
+4. 업데이트 후 카톡에 "김철수: 1번 30% 업데이트 완료" 형식으로 알림
+
+⚠️ 중요: 보고 마감일 2025-06-19 (목) 오전까지`;
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(template).then(function() {
+                    alert(`📋 구글시트 템플릿이 클립보드에 복사되었습니다!
+
+다음 단계:
+1. 구글 드라이브(drive.google.com) 접속
+2. 새로 만들기 → 구글 스프레드시트 선택  
+3. 붙여넣기(Ctrl+V)
+4. 우측 상단 "공유" → "링크가 있는 모든 사용자" → "편집자"
+5. 생성된 링크를 팀원들에게 공유`);
+                });
+            } else {
+                alert('템플릿:\n\n' + template);
+            }
+        }
+
+        function downloadAsWord() {
+            const content = document.querySelector('.container').innerHTML;
+            
+            const wordContent = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>인사관리 업무 지시사항 대책안</title>
+                    <style>
+                        body { font-family: 'Malgun Gothic', Arial, sans-serif; line-height: 1.6; margin: 20px; color: black; }
+                        .header { text-align: center; border-bottom: 2px solid black; padding-bottom: 20px; margin-bottom: 30px; }
+                        .header h1 { color: black; margin: 0; font-size: 24px; font-weight: bold; }
+                        .urgent-notice { border: 2px solid black; padding: 20px; margin-bottom: 30px; }
+                        .item { border: 1px solid black; margin-bottom: 20px; page-break-inside: avoid; }
+                        .item-header { background-color: black; color: white; padding: 15px; font-weight: bold; }
+                        .item-content { padding: 20px; }
+                        .directive, .action { background-color: white; border: 1px solid black; padding: 15px; margin-bottom: 15px; }
+                        .details table { width: 100%; border-collapse: collapse; margin-top: 15px; border: 1px solid black; }
+                        .details th, .details td { border: 1px solid black; padding: 8px; text-align: center; color: black; }
+                        .details th { background-color: white; font-weight: bold; }
+                        .priority { display: inline-block; padding: 2px 6px; border: 1px solid black; font-size: 12px; font-weight: bold; color: black; background-color: white; }
+                        .tracking-guide, .google-sheet-link, .simple-instructions, .kakao-example { display: none; }
+                    </style>
+                </head>
+                <body>${content}</body>
+                </html>
+            `;
+            
+            const blob = new Blob([wordContent], { type: 'application/msword' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = '인사관리_업무지시사항_대책안_2025-06-13.doc';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            alert('Word 파일 다운로드가 시작되었습니다!');
+        }
+    </script>
+</body>
+</html>
